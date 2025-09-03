@@ -1,0 +1,15 @@
+#LM 2nd Madlib
+#basic version because i'm lazy today
+name=input('Give me a proper noun. ')
+adj_double=input('Give me an adjective. ')
+adj1=input('Give me an adjective. ')
+adj2=input('Give me an adjective. ')
+adj3=input('Give me an adjective. ')
+adj4=input('Give me an adjective. ')
+adv=input('Give me an adverb. ')
+adj6=input('Give me an adjective. ')
+noun1=input('Give me an noun. ')
+noun2=input('Give me an noun. ')
+noun3=input('Give me an plural noun. ')
+noun_extra=input('Give me a plural noun. ')
+print(name+' is a '+adj1+', '+adj2+', and '+adj_double+' '+noun1+'.  Its design philosophy emphasizes '+noun2+' readability with the use of significant '+noun_extra+'.  '+name+' is dynamically '+adj3+' and '+adj4+'.  It supports multiple '+noun3+', including structured (particularly '+adv+'), '+adj6+' and '+adj_double+' '+noun3+'. ')
