@@ -16,4 +16,3 @@ print(name[name.find(a):name.find(a)+len(a)])
 
 #len() gets the length of the string, but is not a string method
 #Use [x:y] to get part of the string from indexes x through y
-print((2**15)*50)
