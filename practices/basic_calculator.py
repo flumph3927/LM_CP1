@@ -15,19 +15,19 @@ while run:
         y=float(y)
         eq=input("What equation would you like to run?(+,-,*,/,//,%,**)(q to quit)")
         if eq=='+':
-            print(f"{x} + {y} = {x+y}")
+            print(f"{x} + {y} = {round((x+y),2)}")
         elif eq=='-':
-            print(f"{x} - {y} = {x-y}")
+            print(f"{x} - {y} = {round((x-y),2)}")
         elif eq=='*':
-            print(f"{x} * {y} = {x*y}")
+            print(f"{x} * {y} = {round((x*y),2)}")
         elif eq=='/':
-            print(f"{x} / {y} = {x/y}")
+            print(f"{x} / {y} = {round((x/y),2)}")
         elif eq=='//':
-            print(f"{x} // {y} = {x//y}")
+            print(f"{x} // {y} = {round((x//y),2)}")
         elif eq=='%':
-            print(f"{x} % {y} = {x%y}")
+            print(f"{x} % {y} = {round((x%y),2)}")
         elif eq=='**':
-            print(f"{x} ** {y} = {x**y}")
+            print(f"{x} ** {y} = {round((x**y),2)}")
         elif eq=='q':
             run=False
         else:
