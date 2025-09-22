@@ -1,6 +1,6 @@
 import random, string
 
-base=['Write a program that asks a user for their username and their. If the username and the password match the ones given in the program it welcomes the user to the program. Otherwise it tells the user that their login credentials were invalid.','Have a selection of several different users with different passwords. Check to see if the username is one of the options, then check to see if the password matches for that given user. (I recommend using a list of users with the username and password set up as their own list)']
+base=[]
 source=[]
 data=[]
 starters=[]
@@ -13,6 +13,7 @@ for p in base:
 for m in source:
     if m.strip()=='':
         source.remove(m)
+
 index=-1
 for i in source:
     translator = str.maketrans('', '', (string.punctuation+'0123456789'))
@@ -23,6 +24,10 @@ for i in source:
         data.append(v)
     data.append('.')
     index=-1
+
+for j in data:
+    if j.strip=='':
+        data.remove(j)
 
 sentence.append(random.choice(starters))
 while sentence[-1]!='.':
