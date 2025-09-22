@@ -1,10 +1,15 @@
 import random, string
 
+base=[]
 source=[]
 data=[]
 starters=[]
 sentence=[]
 poss=[]
+for p in base:
+    bases=p.split('.')
+    for h in bases:
+        source.append(h.strip())
 index=-1
 for i in source:
     translator = str.maketrans('', '', (string.punctuation+'0123456789'))
