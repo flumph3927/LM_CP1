@@ -32,7 +32,7 @@ while run: #gets inputs
 total=0
 for i in grades:
     total += float(i)
-avg=round(total/len(grades),3)
+avg=round(total/len(grades),2)
 
 if avg >= 93:
     print(f'Your average grade is {avg}, which is an A.')
