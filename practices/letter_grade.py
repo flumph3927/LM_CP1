@@ -29,12 +29,12 @@ while run: #gets inputs
             else:
                 print('You need to enter at least one grade.')
 
-total=0
+total=0 #gets average grade
 for i in grades:
     total += float(i)
 avg=round(total/len(grades),2)
 
-if avg >= 93:
+if avg >= 93: #outputs values
     print(f'Your average grade is {avg}, which is an A.')
 elif avg >= 90:
     print(f'Your average grade is {avg}, which is an A-.')
