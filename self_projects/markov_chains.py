@@ -29,7 +29,11 @@ for j in data:
     if j.strip=='':
         data.remove(j)
 
-sentence.append(random.choice(starters))
+if starters != []:
+    sentence.append(random.choice(starters))
+else:
+    print('You have problems.')
+    sentence=['']
 while sentence[-1]!='.':
     poss=[]
     count=1
