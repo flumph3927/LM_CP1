@@ -29,5 +29,5 @@ while not dne:
                 dne=False
 for i in mp:
     for x in i:
-        print(x,end='')
+        print(x,'',end='')
     print()
