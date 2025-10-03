@@ -1,17 +1,18 @@
 import random
-sze=60
+z=40
+y=45
 mp=[]
-for i in range(sze):
+for i in range(y):
     mp.append([])
-    for x in range(sze):
+    for x in range(z):
         mp[i].append('')
 dne=False
 while not dne:
-    tle=[random.randint(0,(sze-1)),random.randint(0,(sze-1))]
+    tle=[random.randint(0,(y-1)),random.randint(0,(z-1))]
     if mp[tle[0]][tle[1]]=='':
         ps=['~','-','~','~','~','-','^','+','+']
         for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
-            if j[0]<(sze-1) and j[0]>-1 and j[1]>-1 and j[1]<(sze-1):
+            if j[0]<(y-1) and j[0]>-1 and j[1]>-1 and j[1]<(z-1):
                 if mp[j[0]][j[1]] != '':
                     for a in range(100):
                         ps.append(mp[j[0]][j[1]])
