@@ -10,7 +10,7 @@ dne=False
 while not dne:
     tle=[random.randint(0,(y-1)),random.randint(0,(z-1))]
     if mp[tle[0]][tle[1]]=='':
-        ps=['~','-','~','~','~','-','^','+','+']
+        ps=['-','-','~','~','~','~','^','+','+']
         for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
             if j[0]<(y-1) and j[0]>-1 and j[1]>-1 and j[1]<(z-1):
                 if mp[j[0]][j[1]] != '':
