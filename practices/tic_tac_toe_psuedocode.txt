@@ -1,0 +1,3 @@
+#LM 2nd psuedocode tic tac toe
+
+set MAP to 3 by 3 matrix
