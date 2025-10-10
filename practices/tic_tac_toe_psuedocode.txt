@@ -1,3 +1,45 @@
-#LM 2nd psuedocode tic tac toe
+#LM 2nd pseudocode tic tac toe
 
 set MAP to 3 by 3 matrix
+Set WIN to false
+
+Loop infinitely
+
+	Loop while CHOICE is not a previously chosen square
+        Ask user to enter square location in battleship format(e.g. B3), set CHOICE to answer
+    When loop ends
+        Change CHOICE to column/row number list format
+        Change location CHOICE in MAP to x
+
+    Loop while COMP is not a previously chosen square
+        Set COMP to two random numbers 0-2
+    When loop ends
+        Change location COMP in MAP to o
+
+    Loop through rows in MAP
+	    Loop through columns in MAP
+		    Check if column is all x or all o, and if so, which
+			    set WIN to x or o, depending on which one won
+
+    Check if first of all rows is x or o, and, if so, which
+        Set WIN to x or o, depending on which one won
+        
+    Check if second of all rows is x or o, and, if so, which
+        Set WIN to x or o, depending on which one won
+
+    Check if third of all rows is x or o, and, if so, which
+        Set WIN to x or o, depending on which one won
+
+    Check if first of row one, second of row two, and third of row three are all x or o, and, if so, which
+        Set WIN to x or o, depending on which one won
+
+    Check if first of row three, second of row two, and third of row one are all x or o, and, if so, which
+        Set WIN to x or o, depending on which one won
+
+    if WIN is false and MAP is all x or o
+        Display cat’s game
+        End code
+	
+	If WIN is not false
+		Display who won
+		End code
