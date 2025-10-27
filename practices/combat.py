@@ -86,6 +86,7 @@ else:
 print(f'Your stats are:\nHealth: {health}\nDefense: {defense}\nAttack: {attack}\nDamage: {damage[0]}+{damage[1]}\nStealth: {stealth}')
 player=[health,defense,attack,damage,stealth]
 enemy=[random.randint(5,15),random.randint(8,18),random.randint(2,8)]
+
 combat=True
 if player[2]>enemy[2]:
     print('You go first!')
