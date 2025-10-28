@@ -1,6 +1,6 @@
 import random
-z=20
-y=22
+z=115
+y=60
 mp=[]
 for i in range(y):
     mp.append([])
@@ -14,7 +14,7 @@ while not dne:
         for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
             if j[0]<(y-1) and j[0]>-1 and j[1]>-1 and j[1]<(z-1):
                 if mp[j[0]][j[1]] != '':
-                    for a in range(100):
+                    for a in range(10):
                         ps.append(mp[j[0]][j[1]])
         mp[tle[0]][tle[1]]=random.choice(ps)
     dne=True
@@ -33,7 +33,7 @@ for i in range(1000):
                 ps=[]
                 for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
                     if j[0]<(y) and j[0]>-1 and j[1]>-1 and j[1]<(z):
-                        for a in range(100):
+                        for a in range(1):
                             ps.append(mp[j[0]][j[1]])
                 mp[tle[0]][tle[1]]=random.choice(ps)
         dne=True
