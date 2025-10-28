@@ -1,6 +1,6 @@
 import random
-z=40
-y=45
+z=20
+y=22
 mp=[]
 for i in range(y):
     mp.append([])
@@ -43,11 +43,12 @@ for i in range(1000):
                 if x == '':
                     dne=False
 
+    mappp=''
     mapp=''
     cds={'~':'\033[104m','-':'\033[43m','^':'\033[1m\033[47m','+':'\033[102m'}
     for i in mp:
         for x in i:
             mapp+=(cds[x]+' '+x+' '+'\033[00m')
-        mapp+=('\n')
-    print(mapp)
-    print()
+        mappp+=mapp+'\n'
+        mapp=''
+    print(mappp,end='\n\n')
