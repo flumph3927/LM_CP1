@@ -24,32 +24,30 @@ while not dne:
                 dne=False
 
 
-mp=[]
-for i in range(y):
-    mp.append([])
-    for x in range(z):
-        mp[i].append('')
+for i in range(1000):
+    dne=False
+    while not dne:
+        for i in range(y):
+            for x in range(z):
+                tle=[i,x]
+                ps=['-','-','~','~','~','~','^','+','+']
+                for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
+                    if j[0]<(y-1) and j[0]>-1 and j[1]>-1 and j[1]<(z-1):
+                        if mp[j[0]][j[1]] != '':
+                            for a in range(100):
+                                ps.append(mp[j[0]][j[1]])
+                mp[tle[0]][tle[1]]=random.choice(ps)
+        dne=True
+        for i in mp:
+            for x in i:
+                if x == '':
+                    dne=False
 
-dne=False
-while not dne:
-    for i in range(y):
-        for x in range(z):
-            tle=[i,x]
-            ps=['-','-','~','~','~','~','^','+','+']
-            for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
-                if j[0]<(y-1) and j[0]>-1 and j[1]>-1 and j[1]<(z-1):
-                    if mp[j[0]][j[1]] != '':
-                        for a in range(100):
-                            ps.append(mp[j[0]][j[1]])
-            mp[tle[0]][tle[1]]=random.choice(ps)
-    dne=True
+    mapp=''
+    cds={'~':'\033[104m','-':'\033[43m','^':'\033[1m\033[47m','+':'\033[102m'}
     for i in mp:
         for x in i:
-            if x == '':
-                dne=False
-
-cds={'~':'\033[104m','-':'\033[43m','^':'\033[1m\033[47m','+':'\033[102m'}
-for i in mp:
-    for x in i:
-        print(cds[x]+'',x,'\033[00m',end='')
+            mapp+=(cds[x]+' '+x+' '+'\033[00m')
+        mapp+=('\n')
+    print(mapp)
     print()
