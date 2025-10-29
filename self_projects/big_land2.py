@@ -1,5 +1,5 @@
 import random
-z=115
+z=110
 y=60
 mp=[]
 for i in range(y):
