@@ -1,6 +1,6 @@
 import random
-z=20
-y=22
+z=30
+y=35
 mp=[]
 for i in range(y):
     mp.append([])
@@ -10,7 +10,7 @@ dne=False
 while not dne:
     tle=[random.randint(0,(y-1)),random.randint(0,(z-1))]
     if mp[tle[0]][tle[1]]=='':
-        ps=['-','-','~','~','~','~','^','+','+']
+        ps=['-','-','~','~','~','~','~','^','+','+']
         for j in [[tle[0],tle[1]+1],[tle[0]-1,tle[1]],[tle[0]+1,tle[1]],[tle[0],tle[1]-1]]:
             if j[0]<(y-1) and j[0]>-1 and j[1]>-1 and j[1]<(z-1):
                 if mp[j[0]][j[1]] != '':
@@ -24,7 +24,7 @@ while not dne:
                 dne=False
 
 
-for i in range(1000):
+for i in range(150):
     dne=False
     while not dne:
         for i in range(y):
@@ -48,6 +48,8 @@ for i in range(1000):
     for i in mp:
         for x in i:
             mapp+=(cds[x]+' '+x+' '+'\033[00m')
-        mappp+=mapp+'\n'
-        mapp=''
-    print(mappp,end='\n\n')
+        mapp+='\n'
+    print(mapp)
+#        mappp+=mapp+'\n'
+#        mapp=''
+#    print(mappp,end='\n\n')
