@@ -1,6 +1,6 @@
 import random
 z=110
-y=60
+y=50
 mp=[]
 for i in range(y):
     mp.append([])
