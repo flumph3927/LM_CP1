@@ -12,11 +12,11 @@ make function to check map:
         check all areas surrounding SELECT for empty squares
         add coordinates of all empty squares to POSS
         add SELECT to DONE
-        remove SELECT from POSS
+        remove all in DONE from POSS
     if POSS empty, return false
 '''
 import turtle,random
-def generate_map():
+def generateMap():
     mapp=[[2,0,2,2,2,2,2,2,2,2],[],[],[],[],[],[],[],[],[2,2,2,2,2,2,2,2,0,2]]
     for i in mapp:
         if mapp.index(i)!=0 and mapp.index(i)!=9:
@@ -50,12 +50,20 @@ def display(mapp):
             t.forward(20)
     turtle.done()
 def check(mapp):
-    ps=[]
+    ps=[[9,8]]
     dne=[]
-    ps+=[7,6]
     while ps:
         slct=random.choice(ps)
         if slct==[0,1]:
             return True
-        
-display(generate_map())
+        for i in [[slct[0]+1,slct[1]],[slct[0]-1,slct[1]],[slct[0],slct[1]-1],[slct[0],slct[1]+1]]:
+            if i[0]>-1 and i[0]<10 and i[1]>-1 and i[1]<10 and mapp[i[0]][i[1]]!=2:
+                ps.append(i)
+        dne.append(slct)
+        for i in dne:
+            if i in ps:
+                ps.remove(i)
+mp=generateMap()
+while not check(mp):
+    mp=generateMap()
+display(mp)
