@@ -39,6 +39,8 @@ for i in range(1500):
                         j[1]-=z
                     for a in range(100):
                         ps.append(mp[j[0]][j[1]])
+                for b in range(100):
+                    ps.append(mp[i][x])
                 mp[tle[0]][tle[1]]=random.choice(ps)
         dne=True
         for i in mp:
