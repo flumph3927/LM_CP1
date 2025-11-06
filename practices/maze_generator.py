@@ -19,8 +19,12 @@ loop while mp is unsolvable, using function check map
     set MP to function generate grid
 display map using function
 '''
+
+
 import turtle,random
-#make function that generates 20 by 20 grid of 1 and 0, edges all 1
+
+
+#make function that generates 20 by 20 grid of 1 and 0, edges all 1 except entrance and exit
 def generateMap():
     mapp=[[2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2]]#make base grid
     for i in mapp:
@@ -30,32 +34,8 @@ def generateMap():
                 i.append(random.randint(0,2))
             i.append(2)
     return mapp
-#make function to draw square with turtle, but end one side from start
-def square(trtl):
-    for i in range(4):
-        trtl.lt(90)
-        trtl.forward(20)
-    trtl.forward(20)
-#make function to set up turtle, draw rows out of squares with fill depending on generated map, draw rows in correct alignment
-def display(mapp):
-    t=turtle.Turtle()# setup turtle
-    t.speed(0)
-    t.pensize(0)
-    t.penup()
-    for i in mapp:# loop through map
-        for x in i:
-            if x==2:
-                t.begin_fill()#draw solid square
-                square(t)
-                t.end_fill()
-            else:
-                square(t)#draw empty square
-        t.rt(180)
-        t.forward(420) # move to new line
-        for i in range(2):
-            t.lt(90)
-            t.forward(20)
-    turtle.done()
+
+
 #make function to check map:
 def check(mapp):
     ps=[[19,18]] #    set DONE to empty lists  set POSS to list with start square
@@ -71,6 +51,38 @@ def check(mapp):
         for i in dne:
             if i in ps:#remove all in DONE from POSS
                 ps.remove(i)
+
+
+#make function to draw square with turtle, but end one side from start
+def square(trtl):
+    for i in range(4):
+        trtl.lt(90)
+        trtl.forward(20)
+    trtl.forward(20)
+
+#make function to set up turtle, draw rows out of squares with fill depending on generated map, draw rows in correct alignment
+def display(mapp):
+    t=turtle.Turtle()# setup turtle, 
+    turtle.tracer(0)
+    t.penup()
+    t.goto(-200,200)
+    for i in mapp:# loop through map
+        for x in i:
+            if x==2:
+                t.begin_fill()#draw solid square
+                square(t)
+                t.end_fill()
+            else:
+                square(t)#draw empty square
+        t.rt(180)
+        t.forward(420) # move to new line
+        for i in range(2):
+            t.lt(90)
+            t.forward(20)
+    turtle.update()
+    turtle.done()
+
+
 mp=generateMap()#set MP to function generate grid
 while not check(mp):#loop while mp is unsolvable, using function check map
     mp=generateMap()#set MP to function generate grid
