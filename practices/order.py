@@ -62,20 +62,32 @@ def display(menu):
 #   display OUT
     print(out)
 
+#create function get order
 def getOrder():
+#   set DRINK to user input
     drink = input('What drink would you like? ')
+#   set MAIN to user input
     main = input('What main course would you like? ')
+#   set SIDES to user inputs
     sides = [input('What side would you like? ')]
     sides.append(input('What other side would you like? '))
+#   return DRINK, MAIN, SIDES
     return [drink, main, sides]
 
+#create function price, pass DRINK, MAIN, SIDES
 def price(grid, foods):
-#    pric=grid[grid[0]][foods[0]]+grid[grid[1]][foods[1]]+grid[grid[2]][foods[2][0]]+grid[grid[2]][foods[2][1]]
+#   add prices of DRINK, MAIN and SIDES to new variable PRICE
     pric=grid['Drinks:'][foods[0]]+grid['Main Courses:'][foods[1]]+grid['Sides:'][foods[2][0]]+grid['Sides:'][foods[2][1]]
+#   display PRICE
     print(f'Subtotal: ${pric}')
+#   set TOTAL to PRICE and tax
     total=round(pric*1.085,2)
+#   display TOTAL
     print(f'Total: ${total}')
 
+#call function display
 display(menu)
+#set ITEMS to function get order
 items=getOrder()
+#call function price on ITEMS
 price(menu, items)
