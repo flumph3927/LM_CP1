@@ -10,9 +10,12 @@
 #   display welcome
 #   display OUT
 #create function get order
-#   set DRINK to user input
-#   set MAIN to user input
-#   set SIDES to user inputs
+#   loop until DRINK is valid input:
+#       set DRINK to user input
+#   loop until MAIN is valid input:
+#       set MAIN to user input
+#   loop until SIDES are valid inputs:
+#       set SIDES to user inputs
 #   return DRINK, MAIN, SIDES
 #create function price, pass DRINK, MAIN, SIDES
 #   add prices of DRINK, MAIN and SIDES to new variable PRICE
@@ -63,14 +66,25 @@ def display(menu):
     print(out)
 
 #create function get order
-def getOrder():
-#   set DRINK to user input
-    drink = input('What drink would you like? ')
-#   set MAIN to user input
-    main = input('What main course would you like? ')
-#   set SIDES to user inputs
-    sides = [input('What side would you like? ')]
-    sides.append(input('What other side would you like? '))
+def getOrder(all):
+#   loop until DRINK is valid input:
+    drink=''
+    while drink not in all['Drinks:'].keys():
+#       set DRINK to user input
+        drink = input('What drink would you like? ')
+#   loop until main is valid input:
+    main=''
+    while main not in all['Main Courses:'].keys():
+#       set MAIN to user input
+        main = input('What main course would you like? ')
+#   loop until Sides are valid inputs:
+    sides=[]
+    for i in range(2):
+        side=''
+        while side not in all['Sides:'].keys():
+#           set SIDES to user inputs
+            side = input('What side would you like? (you will choose two) ')
+        sides.append(side)
 #   return DRINK, MAIN, SIDES
     return [drink, main, sides]
 
@@ -88,6 +102,6 @@ def price(grid, foods):
 #call function display
 display(menu)
 #set ITEMS to function get order
-items=getOrder()
+items=getOrder(menu)
 #call function price on ITEMS
 price(menu, items)
