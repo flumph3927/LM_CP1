@@ -12,10 +12,13 @@
 #create function get order
 #   loop until DRINK is valid input:
 #       set DRINK to user input
+        # if needed, display invalid input message
 #   loop until MAIN is valid input:
 #       set MAIN to user input
+        # if needed, display invalid input message
 #   loop until SIDES are valid inputs:
 #       set SIDES to user inputs
+        # if needed, display invalid input message
 #   return DRINK, MAIN, SIDES
 #create function price, pass DRINK, MAIN, SIDES
 #   add prices of DRINK, MAIN and SIDES to new variable PRICE
@@ -72,11 +75,17 @@ def getOrder(all):
     while drink not in all['Drinks:'].keys():
 #       set DRINK to user input
         drink = input('What drink would you like? ')
+        # if needed, display invalid input message
+        if drink not in all['Drinks:'].keys():
+            print('We do not offer that as a drink. You will be asked again.')
 #   loop until main is valid input:
     main=''
     while main not in all['Main Courses:'].keys():
 #       set MAIN to user input
         main = input('What main course would you like? ')
+        # if needed, display invalid input message
+        if main not in all['Main Courses:'].keys():
+            print('We do not offer that as a main course. You will be asked again.')
 #   loop until Sides are valid inputs:
     sides=[]
     for i in range(2):
@@ -84,6 +93,9 @@ def getOrder(all):
         while side not in all['Sides:'].keys():
 #           set SIDES to user inputs
             side = input('What side would you like? (you will choose two) ')
+            # if needed, display invalid input message
+            if side not in all['Sides:'].keys():
+                print('We do not offer that as a side. You will be asked again.')
         sides.append(side)
 #   return DRINK, MAIN, SIDES
     return [drink, main, sides]
