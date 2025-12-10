@@ -27,7 +27,7 @@ base=[[[[[{'enemies':0,'shop':0,'boss':'','passage':[]},{'enemies':0,'shop':0,'b
 
           [[{'enemies':1,'shop':0,'boss':'','passage':[4,[1,0],[1,0],9,[2,2]]},{'enemies':1,'shop':0,'boss':'','passage':[]}],
            [{'enemies':1,'shop':0,'boss':'','passage':[8,[1,1],[2,1],9,[2,2]]},{'enemies':1,'shop':0,'boss':[48,[6,10]],'passage':[]}]]]],
-           {10:{'Daggers':[8,'spd']},10:{'Greatsword':[8,'str']},10:{'Spell':[8,'mag']}},[48,[6,10]]]
+           {8:{'Daggers':[8,'spd']},9:{'Greatsword':[8,'str']},10:{'Spell':[10,'mag']}},[48,[6,10]]]
 
 def creation():
     total=random.randint(3,20)
@@ -121,3 +121,80 @@ def combat(player):
       dmg=(player[-1][attack][0]+player[5])*random.random()*2
     print(f'You deal {int(dmg)} damage to the enemy.')
     enemy[0]-=int(dmg)
+    player[1]-=int(enemy[1]*random.random()*2)
+    player[2]-=int(enemy[1]*random.random()*2)
+    print(f'The enemy attacked. You are now at {player[1]} health and {player[2]} health remaining in this battle.')
+    if player[2]<1:
+      print('You are defeated.')
+      player[2]=player[0]/4
+      return player
+    elif enemy[0]<1:
+      print('You defeat the enemy.')
+      player[2]=player[0]/4
+      player[6]+=1
+      return player
+
+def boss_combat(player,boss,final):
+  if boss==final:
+    end=True
+  while True:
+    print('Possible attacks:\n', player[-1])
+    attack=input('What attack would you like to use?')
+    while attack not in player[-1]:
+      print('Invalid input. Try again.')
+      attack=input('What attack would you like to use?')
+    if player[-1][attack][0]=='str':
+      dmg=(player[-1][attack][0]+player[3])*random.random()*2
+    elif player[-1][attack][0]=='spd':
+      dmg=(player[-1][attack][0]+player[4])*random.random()*2
+    elif player[-1][attack][0]=='mag':
+      dmg=(player[-1][attack][0]+player[5])*random.random()*2
+    print(f'You deal {int(dmg)} damage to the boss.')
+    boss[0]-=int(dmg)
+    player[1]-=int(random.choice(boss[1])*random.random()*2)
+    print(f'The boss attacked. You are now at {player[1]} health.')
+    if player[2]<1:
+      print('You are defeated.')
+      return player, boss, final
+    elif boss[0]<1:
+      print('You defeat the boss.')
+      if end: final[0]=0
+      player[6]+=10
+      scr=input('What score would you like to upgrade?(str, spd, mag)').lower()
+      while scr not in ['str','spd','mag']:
+        scr=input('What score would you like to upgrade?(str, spd, mag)').lower()
+      if scr=='str':
+        player[3]+=1
+      if scr=='spd':
+        player[4]+=1
+      if scr=='mag':
+        player[5]+=1
+      return player,boss,final
+
+def shop(player, items):
+  while True:
+    print(f'You have {player[6]} coins.')
+    print('Avaliable shop items:(price: item)')
+    check=['str','spd','mag']
+    for i in items.keys():
+      print(f'{i}: {list(items[i].keys())[0]} ({items[i][list(items[i].keys())[0]][0]} damage, uses {items[i][list(items[i].keys())[0]][1]} score.)')
+      check.append(list(items[i].keys())[0])
+    print('11:str up\n11:spd up\n11: mag up')
+    buy=input('What item would you like to buy? L to leave shop.')
+    while buy not in check:
+      buy=input('What item would you like to buy? L to leave shop.')
+    if buy.lower()=='l': break
+    if buy in ['str','spd','mag']:
+      player[6]-=11
+      if buy=='str':
+        player[3]+=1
+      if buy=='spd':
+        player[4]+=1
+      if buy=='mag':
+        player[5]+=1
+    else:
+      for i in items.keys():
+        if list(items[i].keys())[0]==buy:
+          player[-1][buy]==items[i][list(items[i].keys())[0]]
+          player[6]-=i
+  return player,items
