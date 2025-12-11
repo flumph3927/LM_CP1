@@ -52,7 +52,7 @@ def creation():
         print('Invalid input, try again.')
     return [random.randint(5,15)+str+spd, random.randint(5,15)+str+spd, (random.randint(5,15)+str+spd)/4, str, spd, mag, 0, {'base attack':[6,'str']}]
 
-def display_map(area, coord):
+def displayMap(area, coord):
   print(f'Map of area{area[0]}:\n')
   out=''
   for x in area[1]:
@@ -134,9 +134,10 @@ def combat(player):
       player[6]+=1
       return player
 
-def boss_combat(player,boss,final):
+def bossCombat(player,boss,final):
   if boss==final:
     end=True
+    print('This is the final boss.')
   while True:
     print('Possible attacks:\n', player[-1])
     attack=input('What attack would you like to use?')
@@ -159,6 +160,7 @@ def boss_combat(player,boss,final):
     elif boss[0]<1:
       print('You defeat the boss.')
       if end: final[0]=0
+      boss=0
       player[6]+=10
       scr=input('What score would you like to upgrade?(str, spd, mag)').lower()
       while scr not in ['str','spd','mag']:
@@ -198,3 +200,51 @@ def shop(player, items):
           player[-1][buy]==items[i][list(items[i].keys())[0]]
           player[6]-=i
   return player,items
+
+def loss(player):
+  if player[1]<1:
+    print('You ran out of health.\n~~~~~~~~~~Game Over~~~~~~~~~~')
+    return True
+  else: return False
+
+def win(final):
+  if final[0]<1:
+    print('You have defeated the final boss.\n~~~~~~~~~~You Win!~~~~~~~~~~')
+    return True
+  else: return False
+
+def update(player,shopp,areas,select,coords,finalboss):
+  print('You enter the room.')
+  for i in select[coords[0]][coords[1]]['enemies']:
+    print('There is an enemy!')
+    player=combat(player)
+    select[coords[0]][coords[1]]['enemies']-=1
+  if loss(player):
+    return player,shopp,areas,select,coords,finalboss,False
+  if select[coords[0]][coords[1]]['boss']:
+    player,select[coords[0]][coords[1]]['boss'],finalboss=bossCombat(player,select[coords[0]][coords[1]]['boss'],finalboss)
+  if loss(player):
+    return player,shopp,areas,select,coords,finalboss,False
+  if win(finalboss):
+    return player,shopp,areas,select,coords,finalboss,True
+  if select[coords[0]][coords[1]]['shop']:
+    player,shopp=shop(player,shopp)
+  if select[coords[0]][coords[1]]['passage']:
+    select,coords,areas=transport(select[coords[0]][coords[1]]['passage'],select,areas)
+    return player,shopp,areas,select,coords,finalboss,1
+  displayMap(select,coords)
+  coords=move(coords)
+  return player,shopp,areas,select,coords,finalboss,1
+
+while True:
+  areas=base[0]
+  items=base[1]
+  player=creation()
+  loc=areas[0][0]
+  coords=[0,0]
+  while True:
+    if update(player,items,areas,loc,coords,base[-1]) != 1:
+      break
+  play=input('Would you like to play again?(y for yes, anything else to exit.)')
+  if play!='y':
+    break
