@@ -1,7 +1,7 @@
 #LM 2nd Final Project
 import random
 
-base=[[[[[{'enemies':0,'shop':0,'boss':'','passage':[]},{'enemies':0,'shop':0,'boss':'','passage':[]}],
+base=[[[[[{'enemies':0,'shop':0,'boss':'','passage':0},{'enemies':0,'shop':0,'boss':'','passage':''}],
          [{'enemies':0,'shop':0,'boss':'','passage':[]},{'enemies':0,'shop':0,'boss':'','passage':[2,[0,0],[0,1],1,[0,0]]}]],
 
         [[{'enemies':0,'shop':0,'boss':'','passage':[1,[1,1],[0,0],2,[0,1]]},{'enemies':0,'shop':0,'boss':'','passage':[3,[0,0],[0,2],2,[0,1]]}],
@@ -101,9 +101,9 @@ def move(coord):
   return coord
 
 def transport(item, select, areas):
-  areas[0][item[4][0]][item[4][1]]=select
+  areas[item[4][0]][item[4][1]]=select
   print(f'Moving to area {item[0]}.')
-  return [item[0],areas[0][item[2][0]][item[2][1]]], item[1], areas
+  return [item[0],areas[item[2][0]][item[2][1]]], item[1], areas
 
 def combat(player):
   enemy=[12,2]
@@ -215,22 +215,22 @@ def win(final):
 
 def update(player,shopp,areas,select,coords,finalboss):
   print('You enter the room.')
-  for i in select[coords[0]][coords[1]]['enemies']:
+  for i in range(select[1][coords[0]][coords[1]]['enemies']):
     print('There is an enemy!')
     player=combat(player)
-    select[coords[0]][coords[1]]['enemies']-=1
+    select[1][coords[0]][coords[1]]['enemies']-=1
   if loss(player):
     return player,shopp,areas,select,coords,finalboss,False
-  if select[coords[0]][coords[1]]['boss']:
-    player,select[coords[0]][coords[1]]['boss'],finalboss=bossCombat(player,select[coords[0]][coords[1]]['boss'],finalboss)
+  if select[1][coords[0]][coords[1]]['boss']:
+    player,select[1][coords[0]][coords[1]]['boss'],finalboss=bossCombat(player,select[1][coords[0]][coords[1]]['boss'],finalboss)
   if loss(player):
     return player,shopp,areas,select,coords,finalboss,False
   if win(finalboss):
     return player,shopp,areas,select,coords,finalboss,True
-  if select[coords[0]][coords[1]]['shop']:
+  if select[1][coords[0]][coords[1]]['shop']:
     player,shopp=shop(player,shopp)
-  if select[coords[0]][coords[1]]['passage']:
-    select,coords,areas=transport(select[coords[0]][coords[1]]['passage'],select,areas)
+  if select[1][coords[0]][coords[1]]['passage']:
+    select,coords,areas=transport(select[1][coords[0]][coords[1]]['passage'],select,areas)
     return player,shopp,areas,select,coords,finalboss,1
   displayMap(select,coords)
   coords=move(coords)
@@ -240,11 +240,17 @@ while True:
   areas=base[0]
   items=base[1]
   player=creation()
-  loc=areas[0][0]
+  loc=[1,areas[0][0]]
   coords=[0,0]
   while True:
-    if update(player,items,areas,loc,coords,base[-1]) != 1:
+    lst=update(player,items,areas,loc,coords,base[-1])
+    if lst[-1]!= 1:
       break
+    player=lst[0]
+    items=lst[1]
+    areas=lst[2]
+    loc=lst[3]
+    coords=lst[4]
   play=input('Would you like to play again?(y for yes, anything else to exit.)')
   if play!='y':
     break
