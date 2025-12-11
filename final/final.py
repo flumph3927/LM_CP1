@@ -26,8 +26,8 @@ base=[[[[[{'enemies':0,'shop':0,'boss':'','passage':0},{'enemies':0,'shop':0,'bo
            [{'enemies':random.randint(1,6),'shop':0,'boss':'','passage':[]},{'enemies':random.randint(1,5),'shop':0,'boss':'','passage':[9,[1,0],[2,2],8,[2,1]]}]],
 
           [[{'enemies':1,'shop':0,'boss':'','passage':[4,[1,0],[1,0],9,[2,2]]},{'enemies':1,'shop':0,'boss':'','passage':[]}],
-           [{'enemies':1,'shop':0,'boss':'','passage':[8,[1,1],[2,1],9,[2,2]]},{'enemies':1,'shop':0,'boss':[48,[6,10]],'passage':[]}]]]],
-           {8:{'Daggers':[8,'spd']},9:{'Greatsword':[8,'str']},10:{'Spell':[10,'mag']}},[48,[6,10]]]
+           [{'enemies':1,'shop':0,'boss':'','passage':[8,[1,1],[2,1],9,[2,2]]},{'enemies':1,'shop':0,'boss':[75,[6,10]],'passage':[]}]]]],
+           {8:{'Daggers':[8,'spd']},9:{'Greatsword':[8,'str']},10:{'Spell':[10,'mag']}},[75,[6,10]]]
 
 def creation():
     total=random.randint(3,20)
@@ -50,7 +50,7 @@ def creation():
         break
       except:
         print('Invalid input, try again.')
-    return [random.randint(5,15)+str+spd, random.randint(5,15)+str+spd, (random.randint(5,15)+str+spd)/4, str, spd, mag, 0, {'base attack':[6,'str']}]
+    return [random.randint(5,15)+str+spd, random.randint(5,15)+str+spd, (random.randint(5,15)+str+spd)/4, str, spd, mag, 0, {'base':[6,'str']}]
 
 def displayMap(area, coord):
   print(f'Map of area{area[0]}:\n')
@@ -113,23 +113,32 @@ def combat(player):
     while attack not in player[-1]:
       print('Invalid input. Try again.')
       attack=input('What attack would you like to use?')
-    if player[-1][attack][0]=='str':
+    if player[-1][attack][1]=='str':
       dmg=(player[-1][attack][0]+player[3])*random.random()*2
-    elif player[-1][attack][0]=='spd':
+    elif player[-1][attack][1]=='spd':
       dmg=(player[-1][attack][0]+player[4])*random.random()*2
-    elif player[-1][attack][0]=='mag':
+    elif player[-1][attack][1]=='mag':
       dmg=(player[-1][attack][0]+player[5])*random.random()*2
     print(f'You deal {int(dmg)} damage to the enemy.')
     enemy[0]-=int(dmg)
-    player[1]-=int(enemy[1]*random.random()*2)
-    player[2]-=int(enemy[1]*random.random()*2)
-    print(f'The enemy attacked. You are now at {player[1]} health and {player[2]} health remaining in this battle.')
-    if player[2]<1:
+    if player[2]<1 or player[1]<1:
       print('You are defeated.')
       player[2]=player[0]/4
       return player
     elif enemy[0]<1:
-      print('You defeat the enemy.')
+      print('You defeat the enemy. You get a coin.')
+      player[2]=player[0]/4
+      player[6]+=1
+      return player
+    player[1]-=int(enemy[1]*random.random()*2)
+    player[2]-=int(enemy[1]*random.random()*2)
+    print(f'The enemy attacked. You are now at {player[1]} health and {player[2]} health remaining in this battle.')
+    if player[2]<1 or player[1]<1:
+      print('You are defeated.')
+      player[2]=player[0]/4
+      return player
+    elif enemy[0]<1:
+      print('You defeat the enemy. You get a coin.')
       player[2]=player[0]/4
       player[6]+=1
       return player
@@ -144,17 +153,35 @@ def bossCombat(player,boss,final):
     while attack not in player[-1]:
       print('Invalid input. Try again.')
       attack=input('What attack would you like to use?')
-    if player[-1][attack][0]=='str':
+    if player[-1][attack][1]=='str':
       dmg=(player[-1][attack][0]+player[3])*random.random()*2
-    elif player[-1][attack][0]=='spd':
+    elif player[-1][attack][1]=='spd':
       dmg=(player[-1][attack][0]+player[4])*random.random()*2
-    elif player[-1][attack][0]=='mag':
+    elif player[-1][attack][1]=='mag':
       dmg=(player[-1][attack][0]+player[5])*random.random()*2
     print(f'You deal {int(dmg)} damage to the boss.')
     boss[0]-=int(dmg)
+    if player[2]<1:
+      print('You are defeated.')
+      return player, boss, final
+    elif boss[0]<1:
+      print('You defeat the boss.')
+      if end: final[0]=0
+      boss=0
+      player[6]+=10
+      scr=input('What score would you like to upgrade?(str, spd, mag)').lower()
+      while scr not in ['str','spd','mag']:
+        scr=input('What score would you like to upgrade?(str, spd, mag)').lower()
+      if scr=='str':
+        player[3]+=1
+      if scr=='spd':
+        player[4]+=1
+      if scr=='mag':
+        player[5]+=1
+      return player,boss,final
     player[1]-=int(random.choice(boss[1])*random.random()*2)
     print(f'The boss attacked. You are now at {player[1]} health.')
-    if player[2]<1:
+    if player[1]<1:
       print('You are defeated.')
       return player, boss, final
     elif boss[0]<1:
@@ -222,14 +249,15 @@ def update(player,shopp,areas,select,coords,finalboss):
   if loss(player):
     return player,shopp,areas,select,coords,finalboss,False
   if select[1][coords[0]][coords[1]]['boss']:
+    print('There is an boss!')
     player,select[1][coords[0]][coords[1]]['boss'],finalboss=bossCombat(player,select[1][coords[0]][coords[1]]['boss'],finalboss)
   if loss(player):
     return player,shopp,areas,select,coords,finalboss,False
   if win(finalboss):
-    return player,shopp,areas,select,coords,finalboss,True
+    return player,shopp,areas,select,coords,finalboss,False
   if select[1][coords[0]][coords[1]]['shop']:
     player,shopp=shop(player,shopp)
-  if select[1][coords[0]][coords[1]]['passage']:
+  if select[1][coords[0]][coords[1]]['passage'] and input(f'Would you like to travel to area {select[1][coords[0]][coords[1]]['passage'][0]}?(y to travel, anything else to not)').lower()=='y':
     select,coords,areas=transport(select[1][coords[0]][coords[1]]['passage'],select,areas)
     return player,shopp,areas,select,coords,finalboss,1
   displayMap(select,coords)
@@ -240,7 +268,7 @@ while True:
   areas=base[0]
   items=base[1]
   player=creation()
-  loc=[1,areas[0][0]]
+  loc=[1,base[0][0][0]]
   coords=[0,0]
   while True:
     lst=update(player,items,areas,loc,coords,base[-1])
