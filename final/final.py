@@ -257,7 +257,7 @@ def update(player,shopp,areas,select,coords,finalboss):
     return player,shopp,areas,select,coords,finalboss,False
   if select[1][coords[0]][coords[1]]['shop']:
     player,shopp=shop(player,shopp)
-  if select[1][coords[0]][coords[1]]['passage'] and input(f'Would you like to travel to area {select[1][coords[0]][coords[1]]['passage'][0]}?(y to travel, anything else to not)').lower()=='y':
+  if select[1][coords[0]][coords[1]]['passage'] and input(f'Would you like to travel to new area?(y to travel, anything else to not)').lower()=='y':
     select,coords,areas=transport(select[1][coords[0]][coords[1]]['passage'],select,areas)
     return player,shopp,areas,select,coords,finalboss,1
   displayMap(select,coords)
