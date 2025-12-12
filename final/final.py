@@ -26,8 +26,8 @@ base=[[[[[{'enemies':0,'shop':0,'boss':'','passage':0},{'enemies':0,'shop':0,'bo
            [{'enemies':random.randint(1,6),'shop':0,'boss':'','passage':[]},{'enemies':random.randint(1,5),'shop':0,'boss':'','passage':[9,[1,0],[2,2],8,[2,1]]}]],
 
           [[{'enemies':1,'shop':0,'boss':'','passage':[4,[1,0],[1,0],9,[2,2]]},{'enemies':1,'shop':0,'boss':'','passage':[]}],
-           [{'enemies':1,'shop':0,'boss':'','passage':[8,[1,1],[2,1],9,[2,2]]},{'enemies':1,'shop':0,'boss':[75,[6,10]],'passage':[]}]]]],
-           {8:{'Daggers':[8,'spd']},9:{'Greatsword':[8,'str']},10:{'Spell':[10,'mag']}},[75,[6,10]]]
+           [{'enemies':1,'shop':0,'boss':'','passage':[8,[1,1],[2,1],9,[2,2]]},{'enemies':1,'shop':0,'boss':[65,[6,10]],'passage':[]}]]]],
+           {8:{'Daggers':[8,'spd']},9:{'Greatsword':[8,'str']},10:{'Spell':[10,'mag']}},[65,[6,10]]]
 
 def creation():
     total=random.randint(3,20)
@@ -101,7 +101,7 @@ def move(coord):
   return coord
 
 def transport(item, select, areas):
-  areas[item[4][0]][item[4][1]]=select
+  areas[item[4][0]][item[4][1]]=select[1]
   print(f'Moving to area {item[0]}.')
   return [item[0],areas[item[2][0]][item[2][1]]], item[1], areas
 
@@ -147,6 +147,7 @@ def bossCombat(player,boss,final):
   if boss==final:
     end=True
     print('This is the final boss.')
+  else: end=False
   while True:
     print('Possible attacks:\n', player[-1])
     attack=input('What attack would you like to use?')
@@ -163,7 +164,7 @@ def bossCombat(player,boss,final):
     boss[0]-=int(dmg)
     if player[2]<1:
       print('You are defeated.')
-      return player, boss, final
+      return player, boss
     elif boss[0]<1:
       print('You defeat the boss.')
       if end: final[0]=0
@@ -178,12 +179,12 @@ def bossCombat(player,boss,final):
         player[4]+=1
       if scr=='mag':
         player[5]+=1
-      return player,boss,final
+      return player,boss
     player[1]-=int(random.choice(boss[1])*random.random()*2)
     print(f'The boss attacked. You are now at {player[1]} health.')
     if player[1]<1:
       print('You are defeated.')
-      return player, boss, final
+      return player, boss
     elif boss[0]<1:
       print('You defeat the boss.')
       if end: final[0]=0
@@ -198,7 +199,7 @@ def bossCombat(player,boss,final):
         player[4]+=1
       if scr=='mag':
         player[5]+=1
-      return player,boss,final
+      return player,boss
 
 def shop(player, items):
   while True:
@@ -250,14 +251,14 @@ def update(player,shopp,areas,select,coords,finalboss):
     return player,shopp,areas,select,coords,finalboss,False
   if select[1][coords[0]][coords[1]]['boss']:
     print('There is an boss!')
-    player,select[1][coords[0]][coords[1]]['boss'],finalboss=bossCombat(player,select[1][coords[0]][coords[1]]['boss'],finalboss)
+    player,select[1][coords[0]][coords[1]]['boss']=bossCombat(player,select[1][coords[0]][coords[1]]['boss'],finalboss)
   if loss(player):
     return player,shopp,areas,select,coords,finalboss,False
   if win(finalboss):
     return player,shopp,areas,select,coords,finalboss,False
   if select[1][coords[0]][coords[1]]['shop']:
     player,shopp=shop(player,shopp)
-  if select[1][coords[0]][coords[1]]['passage'] and input(f'Would you like to travel to new area?(y to travel, anything else to not)').lower()=='y':
+  if select[1][coords[0]][coords[1]]['passage'] and input(f'Would you like to travel to area {select[1][coords[0]][coords[1]]['passage'][0]}?(y to travel, anything else to not)').lower()=='y':
     select,coords,areas=transport(select[1][coords[0]][coords[1]]['passage'],select,areas)
     return player,shopp,areas,select,coords,finalboss,1
   displayMap(select,coords)
