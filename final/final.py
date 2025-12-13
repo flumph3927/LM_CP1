@@ -229,7 +229,7 @@ def shop(player, items):
   while True:
     print(f'You have {player[6]} coins.')
     print('Avaliable shop items:(price: item)')
-    check=['str','spd','mag']
+    check=['str','spd','mag','l','L']
     for i in items.keys():
       print(f'{i}: {list(items[i].keys())[0]} ({items[i][list(items[i].keys())[0]][0]} damage, uses {items[i][list(items[i].keys())[0]][1]} score.)')
       check.append(list(items[i].keys())[0])
